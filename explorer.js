@@ -301,6 +301,9 @@ function parseGotMessageHelper(pElement, snippet) {
     }
 }
 
+function parseStartingResourceMessage(pElement) {
+    parseGotMessageHelper(pElement, startingResourcesSnippet);
+}
 
 function parseGotMessage(pElement) {
     parseGotMessageHelper(pElement, receivedResourcesSnippet)
@@ -808,6 +811,7 @@ function reviewThefts() {
 }
 
 var ALL_PARSERS = [
+    parseStartingResourceMessage,
     parseGotMessage,
     parseBuiltMessage,
     parseBoughtMessage,
@@ -861,12 +865,8 @@ function startWatchingMessages() {
 }
 
 
-// Log initial resource distributions.
-function tallyInitialResources() {
-    var allMessages = getAllMessages();
-    MSG_OFFSET = allMessages.length;
-    allMessages.forEach(pElement => parseGotMessageHelper(pElement, startingResourcesSnippet));
-    allMessages.forEach(pElement => parseGotMessage(pElement));
+// Initiate rendering and start watching messages
+function initiate() {
     deleteDiscordSigns();
     render();
     deleteDiscordSigns(); // idk why but it takes 2 runs to delete both signs
@@ -902,7 +902,7 @@ function recognizeUsers() {
 function loadCounter() {
     setTimeout(() => {
         recognizeUsers();
-        tallyInitialResources();
+        initiate();
     }, 250);
 }
 
