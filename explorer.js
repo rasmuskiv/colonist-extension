@@ -35,6 +35,7 @@ var resourceTypes = [wood, brick, sheep, wheat, stone];
 // Players
 var players = [];
 var player_colors = {}; // player -> hex
+var playerNameCssSelector = ".semibold";
 
 // Per player per resource
 var resources = {};
@@ -884,7 +885,7 @@ function recognizeUsers() {
         console.log(username);
         if (!resources[username]) {
             players.push(username);
-            player_colors[username] = msg.style.color;
+            player_colors[username] = msg.querySelector(playerNameCssSelector).style.color;
             resources[username] = {
                 [wood]: 0,
                 [stone]: 0,
