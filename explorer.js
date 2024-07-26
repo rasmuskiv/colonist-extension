@@ -14,10 +14,10 @@ var tradeBankGaveSnippet = "gave bank";
 var tradeBankTookSnippet = "and took";
 var stoleAllOfSnippet = "stole ";
 var discardedSnippet = "discarded";
-var tradedWithSnippet = " with ";
-var tradedSnippet = " traded ";
+var tradedWithSnippet = " from ";
+var tradedSnippet = " gave ";
 //var tradeWantsToGiveSnippet = "wants to give:";
-var tradeGiveForSnippet = "for";
+var tradeGiveForSnippet = " and got ";
 var stoleFromYouSnippet = "You stole";
 var youStoleSnippet = "from you";
 var stoleFromSnippet = " stole  from "; // extra space from icon
@@ -277,7 +277,7 @@ function render() {
 */
 function parseGotMessageHelper(pElement, snippet) {
     var textContent = pElement.textContent;
-    if (!textContent.includes(snippet)) {
+    if (!textContent.includes(snippet) || textContent.includes(tradeGiveForSnippet)) {
         return;
     }
     var player = textContent.replace(snippet, "").split(" ")[0];
@@ -528,7 +528,7 @@ function transferResource(srcPlayer, destPlayer, resource, quantity = 1) {
  */
 function parseTradedMessage(pElement, prevElement) {
     var textContent = pElement.textContent;
-    if (!textContent.includes(tradedWithSnippet)) {
+    if (!textContent.includes(tradedSnippet)) {
         return;
     }
     var tradingPlayer = textContent.split(tradedSnippet)[0];
